@@ -121,7 +121,11 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RetailerController.cs" />
+    <Compile Include="Controllers\RiderController.cs" />
+    <Compile Include="Controllers\SupplyController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -194,13 +198,13 @@
     <Content Include="Scripts\fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="Scripts\fonts\glyphicons-halflings-regular.woff" />
     <Content Include="Scripts\fonts\glyphicons-halflings-regular.woff2" />
-    <Content Include="Views\Home\Customer.cshtml" />
-    <Content Include="Views\Home\Rider.cshtml" />
-    <Content Include="Views\Home\Retailer.cshtml" />
-    <Content Include="Views\Home\Supply.cshtml" />
+    <Content Include="Views\Customer\listCustomer.cshtml" />
+    <Content Include="Views\Rider\listRider.cshtml" />
+    <Content Include="Views\Retailer\listRetailer.cshtml" />
+    <Content Include="Views\Shared\listSupply.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Shared\" />
+    <Folder Include="Views\Supply\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
