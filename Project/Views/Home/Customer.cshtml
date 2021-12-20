@@ -1,0 +1,336 @@
+﻿@model IEnumerable<Project.Models.Customer>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/Scripts/images/logo.png" rel="icon" />
+    <title>Online Hospital Management System</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="~/Scripts/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Scripts/css/style.css" rel="stylesheet">
+    <script src="~/Scripts/js/jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#doctorlist').show();
+            $('.doctor li:first-child a').addClass('active');
+            $('.doctor li a').click(function (e) {
+
+                var tabDiv = this.hash;
+                $('.doctor li a').removeClass('active');
+                $(this).addClass('.active');
+                $('.switchgroup').hide();
+                $(tabDiv).fadeIn();
+                e.preventDefault();
+
+            });
+
+
+        });
+
+        function changeText() {
+            if (document.getElementById("tog").innerHTML === "List and Registration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+") {
+                document.getElementById("tog").innerHTML = "List and Registration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-"
+            }
+            else {
+                document.getElementById("tog").innerHTML = "List and Registration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+"
+            }
+
+
+        }
+        function changa(val) {
+            document.getElementById("custid").value = val;
+
+        }
+
+    </script>
+</head>
+<body>
+
+   
+
+    <div class="container-fluid">
+
+        <!--- Header Start -------->
+        <div class="row header">
+
+            <div class="col-md-10">
+                <h2>Hospital Mangement System</h3>
+            </div>
+
+            <div class="col-md-2 ">
+                <ul class="nav nav-pills ">
+                    <li class="dropdown dmenu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                        <ul class="dropdown-menu ">
+                            <li><a href="profile.html">Change Profile</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="index.html">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--- Header Ends --------->
+
+        <div class="row">
+
+            <!----- Menu Area Start ------>
+            <div class="col-md-2 menucontent">
+
+                <a href="#"><h1>Dashboard</h1></a>
+
+                <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation"><a href="/home/DailyDelivery">Department</a></li>
+                    <li role="presentation"><a href="/home/Supply">Supply Record</a></li>
+                    <li role="presentation"><a href="patients.html">Patients</a></li>
+                    <li role="presentation"><a href="profile.html">Profile</a></li>
+
+
+
+                    <li role="presentation"><button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1" id="tog" onclick="changeText()">List and Registration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</button></li>
+
+
+                    <div class="row">
+
+                        <div class="col">
+                            <div class="collapse multi-collapse" id="multiCollapseExample1">
+
+                                <div class="card card-body" style=" margin-left: 5%; ">
+                                    <ul class="nav nav-pills nav-stacked">
+
+
+                                        <li role="presentation">
+                                            <a href="/home/customer">Customer</a>
+                                        </li>
+
+
+                                        <li role="presentation">
+                                            <a href="/home/rider">Rider</a>
+                                        </li>
+
+                                        <li role="presentation">  <a href="/home/retailer">Retailer</a> </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                </ul>
+
+            </div>
+            <!---- Menu Ares Ends  -------->
+            <!---- Content Ares Start  -------->
+            <div class="col-md-10 maincontent">
+                <!----------------   Menu Tab   --------------->
+                <div class="panel panel-default contentinside">
+                    <div class="panel-heading">Manage Customer</div>
+                    <!----------------   Panel body Start   --------------->
+                    <div class="panel-body">
+                        <ul class="nav nav-tabs doctor">
+                            <li role="presentation"><a href="#doctorlist">Active Customer List</a></li>
+                            <li role="presentation"><a href="#adddoctor">Add New Customer</a></li>
+                            <li role="presentation"><a href="#addme">Non-Active Customers</a></li>
+
+                        </ul>
+
+                        <!----------------   Display Doctor Data List Start  --------------->
+
+
+                        <div id="doctorlist" class="switchgroup">
+                            <table class="table table-bordered table-hover">
+                                <tr class="active">
+                                    <td>Id</td>
+                                    <td>Phone Number</td>
+                                    <td>Name</td>
+                                    <td>Address</td>
+                                    <td>Balance</td>
+                                    <td>Options</td>
+                                </tr>
+
+                                @foreach (var s in Model)
+                                {
+                                    if (s.Active != 0)
+
+                                    {
+                                    <tr>
+                                        <td>@s.Id</td>
+                                        <td>@s.PhnNumber</td>
+                                        <td>@s.Name</td>
+                                        <td>@s.Address</td>
+                                        <td>@s.Balance</td>
+                                        <td>
+                                            <a href="#"><button type="button" id="@s.Id" value="@s.Id" onClick="changa(this.value)" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></button></a>
+                                            <a href="/home/deleteCustomer/@s.Id" class="btn btn-danger"><input type="hidden" value="@s.Id" name="deleteValue"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                        </td>
+                                    </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+                        <!----------------   Display Doctor Data List Ends  --------------->
+                        <!------ Doctor Edit Info Modal Start Here ---------->
+
+
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+
+
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">Edit Customer Information</h4>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <form class="form-horizontal" action="/home/modify" method="post">
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Id</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="number" class="form-control" id="custid" name="custid" readonly="readonly">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Phone No.</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="number" class="form-control" id="custno" name="custno" placeholder="Phone Number" required="required">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Name</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="custname" name="custname" placeholder="Name" required="required">
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Address</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="custaddress" name="custaddress" placeholder="Address" required="required">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Balance</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="add" name="add" placeholder="Balance" required="required">
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <input type="submit" class="btn btn-primary" value="Update"></button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!----------------   Modal ends here  --------------->
+                        <!----------------   Add Doctor Start   --------------->
+                        <div id="adddoctor" class="switchgroup">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <form class="form-horizontal" action="/home/addNewCustomer" method="post">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Customer Phn No</label>
+                                            <div class="col-sm-10">
+                                                <input type="number" class="form-control" name="custid" placeholder="Phone  Number" required="required">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Name</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="custname" placeholder="Name" required="required">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Address</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="custaddress" placeholder="Address" required="required">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Balance</label>
+                                            <div class="col-sm-10">
+                                                <input type="number" class="form-control" name="custbalance" placeholder="Balance" required="required">
+                                            </div>
+                                        </div>
+
+
+
+
+
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <button type="submit" class="btn btn-primary">Add Customer</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="addme" class="switchgroup" style="display:none;">
+                            <table class="table table-bordered table-hover">
+                                <tr class="active">
+                                    <td>Id</td>
+                                    <td>Phone Number</td>
+                                    <td>Name</td>
+                                    <td>Address</td>
+                                    <td>Balance</td>
+                                    <td>Status</td>
+                                    <td>Option</td>
+                                </tr>
+
+                                @foreach (var s in Model)
+                                {
+                                    if (s.Active == 0)
+
+                                    {
+                                    <tr>
+                                        <td>@s.Id</td>
+                                        <td>@s.PhnNumber</td>
+                                        <td>@s.Name</td>
+                                        <td>@s.Address</td>
+                                        <td>@s.Balance</td>
+                                        <td>Not Active</td>
+                                        <td>
+                                            <a href="/home/retreiveCustomer/@s.Id"><button type="button" id="@s.Id" value="Active It"    class="btn btn-primary"></button></a>
+                                            </td>
+                                    </tr>
+                                    }
+                                }
+                            </table>
+                        </div>
+                        <!----------------   Add Doctor Ends   --------------->
+                    </div>
+                    <!----------------   Panel body Ends   --------------->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/js/bootstrap.min.js"></script>
+</body>
+</html>
