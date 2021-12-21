@@ -13,7 +13,7 @@ namespace Project.Controllers
         
         public ActionResult Index()
         {
-            return RedirectToAction("Supply");
+            return RedirectToAction("listCustomer", "Customer");
         }
        
 

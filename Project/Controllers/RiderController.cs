@@ -86,5 +86,24 @@ namespace Project.Controllers
             dc.SubmitChanges();
             return RedirectToAction("listRider");
         }
+        public ActionResult addExpenditure()
+        {
+            string id = Request["rid"];
+            string date = Request["date"];
+            string description = Request["description"];
+            DateTime oDate = Convert.ToDateTime(date);
+
+            Rider c = dc.Riders.First(std => std.Id == float.Parse(id));
+            
+            ////////////////////////////////// Confirmation is needed ///////////////////////////////////////
+            Rider_Expenditure r = new Rider_Expenditure();
+            
+            r.Date = oDate;
+            r.Description = description;
+            r.RiderID = (int)float.Parse(id);
+            dc.Rider_Expenditures.InsertOnSubmit(r);
+            dc.SubmitChanges();
+            return RedirectToAction("listRider");
+        }
     }
 }

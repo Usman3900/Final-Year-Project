@@ -45,6 +45,9 @@ namespace Project.Models
     partial void InsertAvailable(Available instance);
     partial void UpdateAvailable(Available instance);
     partial void DeleteAvailable(Available instance);
+    partial void InsertRider_Expenditure(Rider_Expenditure instance);
+    partial void UpdateRider_Expenditure(Rider_Expenditure instance);
+    partial void DeleteRider_Expenditure(Rider_Expenditure instance);
     #endregion
 		
 		public DataClasses1DataContext() : 
@@ -114,6 +117,14 @@ namespace Project.Models
 			get
 			{
 				return this.GetTable<Available>();
+			}
+		}
+		
+		public System.Data.Linq.Table<Rider_Expenditure> Rider_Expenditures
+		{
+			get
+			{
+				return this.GetTable<Rider_Expenditure>();
 			}
 		}
 	}
@@ -729,6 +740,8 @@ namespace Project.Models
 		
 		private System.Nullable<byte> _Active;
 		
+		private EntitySet<Rider_Expenditure> _Rider_Expenditures;
+		
     #region Extensibility Method Definitions
     partial void OnLoaded();
     partial void OnValidate(System.Data.Linq.ChangeAction action);
@@ -751,6 +764,7 @@ namespace Project.Models
 		
 		public Rider()
 		{
+			this._Rider_Expenditures = new EntitySet<Rider_Expenditure>(new Action<Rider_Expenditure>(this.attach_Rider_Expenditures), new Action<Rider_Expenditure>(this.detach_Rider_Expenditures));
 			OnCreated();
 		}
 		
@@ -894,6 +908,19 @@ namespace Project.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rider_Rider_Expenditure", Storage="_Rider_Expenditures", ThisKey="Id", OtherKey="RiderID")]
+		public EntitySet<Rider_Expenditure> Rider_Expenditures
+		{
+			get
+			{
+				return this._Rider_Expenditures;
+			}
+			set
+			{
+				this._Rider_Expenditures.Assign(value);
+			}
+		}
+		
 		public event PropertyChangingEventHandler PropertyChanging;
 		
 		public event PropertyChangedEventHandler PropertyChanged;
@@ -912,6 +939,18 @@ namespace Project.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_Rider_Expenditures(Rider_Expenditure entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rider = this;
+		}
+		
+		private void detach_Rider_Expenditures(Rider_Expenditure entity)
+		{
+			this.SendPropertyChanging();
+			entity.Rider = null;
 		}
 	}
 	
@@ -976,6 +1015,181 @@ namespace Project.Models
 					this._Quantity = value;
 					this.SendPropertyChanged("Quantity");
 					this.OnQuantityChanged();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.Rider_Expenditures")]
+	public partial class Rider_Expenditure : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _Id;
+		
+		private System.DateTime _Date;
+		
+		private int _RiderID;
+		
+		private string _Description;
+		
+		private EntityRef<Rider> _Rider;
+		
+    #region Extensibility Method Definitions
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnIdChanging(int value);
+    partial void OnIdChanged();
+    partial void OnDateChanging(System.DateTime value);
+    partial void OnDateChanged();
+    partial void OnRiderIDChanging(int value);
+    partial void OnRiderIDChanged();
+    partial void OnDescriptionChanging(string value);
+    partial void OnDescriptionChanged();
+    #endregion
+		
+		public Rider_Expenditure()
+		{
+			this._Rider = default(EntityRef<Rider>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Id", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int Id
+		{
+			get
+			{
+				return this._Id;
+			}
+			set
+			{
+				if ((this._Id != value))
+				{
+					this.OnIdChanging(value);
+					this.SendPropertyChanging();
+					this._Id = value;
+					this.SendPropertyChanged("Id");
+					this.OnIdChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Date", DbType="Date NOT NULL")]
+		public System.DateTime Date
+		{
+			get
+			{
+				return this._Date;
+			}
+			set
+			{
+				if ((this._Date != value))
+				{
+					this.OnDateChanging(value);
+					this.SendPropertyChanging();
+					this._Date = value;
+					this.SendPropertyChanged("Date");
+					this.OnDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_RiderID", DbType="Int NOT NULL")]
+		public int RiderID
+		{
+			get
+			{
+				return this._RiderID;
+			}
+			set
+			{
+				if ((this._RiderID != value))
+				{
+					if (this._Rider.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnRiderIDChanging(value);
+					this.SendPropertyChanging();
+					this._RiderID = value;
+					this.SendPropertyChanged("RiderID");
+					this.OnRiderIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_Description", DbType="VarChar(MAX) NOT NULL", CanBeNull=false)]
+		public string Description
+		{
+			get
+			{
+				return this._Description;
+			}
+			set
+			{
+				if ((this._Description != value))
+				{
+					this.OnDescriptionChanging(value);
+					this.SendPropertyChanging();
+					this._Description = value;
+					this.SendPropertyChanged("Description");
+					this.OnDescriptionChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="Rider_Rider_Expenditure", Storage="_Rider", ThisKey="RiderID", OtherKey="Id", IsForeignKey=true)]
+		public Rider Rider
+		{
+			get
+			{
+				return this._Rider.Entity;
+			}
+			set
+			{
+				Rider previousValue = this._Rider.Entity;
+				if (((previousValue != value) 
+							|| (this._Rider.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._Rider.Entity = null;
+						previousValue.Rider_Expenditures.Remove(this);
+					}
+					this._Rider.Entity = value;
+					if ((value != null))
+					{
+						value.Rider_Expenditures.Add(this);
+						this._RiderID = value.Id;
+					}
+					else
+					{
+						this._RiderID = default(int);
+					}
+					this.SendPropertyChanged("Rider");
 				}
 			}
 		}

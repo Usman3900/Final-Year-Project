@@ -40,12 +40,22 @@
       <Column Name="Address" Type="System.String" DbType="VarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="JoiningDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
       <Column Name="Active" Type="System.Byte" DbType="TinyInt" CanBeNull="true" />
+      <Association Name="Rider_Rider_Expenditure" Member="Rider_Expenditures" ThisKey="Id" OtherKey="RiderID" Type="Rider_Expenditure" />
     </Type>
   </Table>
   <Table Name="dbo.Available" Member="Availables">
     <Type Name="Available">
       <Column Name="Product" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="Quantity" Type="System.Double" DbType="Float" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Rider_Expenditures" Member="Rider_Expenditures">
+    <Type Name="Rider_Expenditure">
+      <Column Name="Id" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Date" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="RiderID" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Description" Type="System.String" DbType="VarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Association Name="Rider_Rider_Expenditure" Member="Rider" ThisKey="RiderID" OtherKey="Id" Type="Rider" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>
