@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Project.Models.Bill>
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Check</title>
+</head>
+<body>
+    <div>
+        <table class="table table-bordered table-hover">
+            <tr class="active">
+                <td>Customer Id</td>
+                <td>Name</td>
+                <td>Address</td>
+                <td>RiderId</td>
+                <td>Rider Name</td>
+                <td>Date</td>
+                <td>Quantity</td>
+                <td>Rate</td>
+                <td>Bill</td>
+            </tr>
+
+            @foreach (var s in Model)
+            {
+
+                <tr>
+                    <td>@s.customerId</td>
+                    <td>@s.customerName</td>
+                    <td>@s.address</td>
+                    <td>@s.riderId</td>
+                    <td>@s.riderName</td>
+                    <td>@s.date.Day/@s.date.Month/@s.date.Year</td>
+                    <td>@s.quantity</td>
+                    <td>@s.rate</td>
+                    <td>@s.bill</td>
+                    
+                </tr>
+
+            }
+        </table>
+    </div>
+</body>
+</html>

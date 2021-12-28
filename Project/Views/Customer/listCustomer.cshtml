@@ -10,9 +10,9 @@
     <link href="~/Scripts/images/logo.png" rel="icon" />
     <title>Online Hospital Management System</title>
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="~/Scripts/bootstrap.min.css">
+    <script src="~/Scripts/jquery.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
     <link href="~/Scripts/css/bootstrap.min.css" rel="stylesheet">
     <link href="~/Scripts/css/style.css" rel="stylesheet">
     <script src="~/Scripts/js/jquery.js"></script>
@@ -35,19 +35,42 @@
 
         });
 
-        function changeText() {
-            if (document.getElementById("tog").innerHTML === "List and Registration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+") {
-                document.getElementById("tog").innerHTML = "List and Registration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-"
-            }
-            else {
-                document.getElementById("tog").innerHTML = "List and Registration &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+"
-            }
-
+       
+        function changa() {
+            document.getElementById("custid").value = arguments[0];
+            document.getElementById("custno").value = arguments[1];
+            document.getElementById("custname").value = arguments[2];
+            document.getElementById("custaddress").value = arguments[3];
+            document.getElementById("add").value = arguments[4];
+            document.getElementById("Rate").value = arguments[5];
 
         }
-        function changa(val) {
-            document.getElementById("custid").value = val;
 
+        function changeText() {
+            if (document.getElementById("tog").innerHTML === "Customer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+") {
+                document.getElementById("tog").innerHTML = "Customer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-"
+            }
+            else {
+                document.getElementById("tog").innerHTML = "Customer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+"
+            }
+        }
+
+        function changeTextRider() {
+            if (document.getElementById("tog1").innerHTML === "Rider &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+") {
+                document.getElementById("tog1").innerHTML = "Rider &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-"
+            }
+            else {
+                document.getElementById("tog1").innerHTML = "Rider &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+"
+            }
+        }
+
+        function changeTextRetailer() {
+            if (document.getElementById("tog2").innerHTML === "Retailer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+") {
+                document.getElementById("tog2").innerHTML = "Retailer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-"
+            }
+            else {
+                document.getElementById("tog2").innerHTML = "Retailer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+"
+            }
         }
 
     </script>
@@ -88,13 +111,78 @@
                 <a href="#"><h1>Dashboard</h1></a>
 
                 <ul class="nav nav-pills nav-stacked">
-                    <li role="presentation"><a href="/home/DailyDelivery">Department</a></li>
                     <li role="presentation"><a href="/Supply/listSupply">Supply Record</a></li>
-                    <li role="presentation"><a href="patients.html">Patients</a></li>
-                    <li role="presentation"><a href="profile.html">Profile</a></li>
-                    <li role="presentation"><a href="/Customer/listCustomer">Customer</a></li>
-                    <li role="presentation"><a href="/Rider/listRider">Rider</a></li>
-                    <li role="presentation"><a href="/Retailer/listRetailer">Retailer</a></li>
+                    <li role="presentation"><a href="/Delivery/DailyDeliveryList">Delivery</a></li>
+
+
+
+                    <li role="presentation">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1" id="tog" onclick="changeText()">Customer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</button>
+
+                        <div class="collapse multi-collapse" id="multiCollapseExample1">
+
+                            <div class="card card-body" style=" margin-left: 5%; ">
+                                <ul class="nav nav-pills nav-stacked">
+
+
+                                    <li role="presentation">
+                                        <a href="/Customer/listCustomer">List & Registration </a>
+                                    </li>
+
+                                    <li role="presentation">
+                                        <a href="/Customer/customerBillings">Payments</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <li role="presentation">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2" id="tog1" onclick="changeTextRider()">Rider &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</button>
+
+                        <div class="collapse multi-collapse" id="multiCollapseExample2">
+
+                            <div class="card card-body" style=" margin-left: 5%; ">
+                                <ul class="nav nav-pills nav-stacked">
+
+
+                                    <li role="presentation">
+                                        <a href="/Rider/listRider">List & Registration </a>
+                                    </li>
+
+                                    <li role="presentation">
+                                        <a href="/Rider/expenditureRider">Expenditures</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <li role="presentation">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample3" aria-expanded="false" aria-controls="multiCollapseExample3" id="tog2" onclick="changeTextRetailer()">Retailer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</button>
+
+                        <div class="collapse multi-collapse" id="multiCollapseExample3">
+
+                            <div class="card card-body" style=" margin-left: 5%; ">
+                                <ul class="nav nav-pills nav-stacked">
+
+
+                                    <li role="presentation">
+                                        <a href="/Retailer/listRetailer">List & Registration </a>
+                                    </li>
+
+                                    <li role="presentation">
+                                        <a href="/Retailer/paymentRetailer">Payments</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
 
 
                 </ul>
@@ -125,6 +213,7 @@
                                     <td>Phone Number</td>
                                     <td>Name</td>
                                     <td>Address</td>
+                                    <td>Assigned Rate</td>
                                     <td>Balance</td>
                                     <td>Options</td>
                                 </tr>
@@ -139,9 +228,10 @@
                                         <td>@s.PhnNumber</td>
                                         <td>@s.Name</td>
                                         <td>@s.Address</td>
+                                        <td>@s.Rate</td>
                                         <td>@s.Balance</td>
                                         <td>
-                                            <a href="#"><button type="button" id="@s.Id" value="@s.Id" onClick="changa(this.value)" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></button></a>
+                                            <a href="#"><button type="button" id="@s.Id" value="@s.Id" onClick="changa(this.value, '@s.PhnNumber', '@s.Name', '@s.Address', @s.Balance, @s.Rate)" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></button></a>
                                             <a href="/Customer/deleteCustomer/@s.Id" class="btn btn-danger"><input type="hidden" value="@s.Id" name="deleteValue"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                         </td>
                                     </tr>
@@ -196,6 +286,13 @@
                                                         <div class="col-sm-10">
                                                             <input type="text" class="form-control" id="custaddress" name="custaddress" placeholder="Address" required="required">
                                                         </div>
+                                                    </div> 
+                                                    
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Rate</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="number" class="form-control" id="Rate" name="Rate" placeholder="Rate" required="required">
+                                                        </div>
                                                     </div>
 
                                                     <div class="form-group">
@@ -243,6 +340,13 @@
                                                 <input type="text" class="form-control" name="custaddress" placeholder="Address" required="required">
                                             </div>
                                         </div>
+                                        
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Rate</label>
+                                            <div class="col-sm-10">
+                                                <input type="number" class="form-control" name="Rate" placeholder="Rate" required="required">
+                                            </div>
+                                        </div>
 
 
                                         <div class="form-group">
@@ -251,10 +355,6 @@
                                                 <input type="number" class="form-control" name="custbalance" placeholder="Balance" required="required">
                                             </div>
                                         </div>
-
-
-
-
 
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">

@@ -10,6 +10,7 @@ namespace Project.Controllers
     public class SupplyController : Controller
     {
         DataClasses1DataContext dc = new DataClasses1DataContext();
+        DataClasses1DataContext dc1 = new DataClasses1DataContext();
 
         // GET: Supply
         public ActionResult Index()
@@ -96,6 +97,8 @@ namespace Project.Controllers
                 s.rate = float.Parse(rate);
                 s.name = r.Name;
 
+                r.Balance = r.Balance + (float.Parse(rate) * float.Parse(quantity));
+
                 Available a = dc.Availables.FirstOrDefault(st => st.Product == "Milk");
                 a.Quantity = a.Quantity + float.Parse(quantity);
 
@@ -112,6 +115,8 @@ namespace Project.Controllers
             Available a = dc.Availables.FirstOrDefault(st => st.Product == "Milk");
             a.Quantity = a.Quantity - c.quantity;
 
+            Retailer r = dc.Retailers.First(std => std.Id == c.retailerId);
+            r.Balance = r.Balance - (c.rate * c.quantity);
             ////////////////////////////////// Deleteing Data But Confirmation message is needed ///////////////////////////////////////
             dc.Supplies.DeleteOnSubmit(c);
             dc.SubmitChanges();
@@ -128,19 +133,33 @@ namespace Project.Controllers
             DateTime oDate = Convert.ToDateTime(date);
 
             Supply s = dc.Supplies.First(std => std.Id == float.Parse(id));
+
             Retailer r = dc.Retailers.First(std => std.Id == float.Parse(retailerId));
+
+            if (s.retailerId != float.Parse(retailerId))
+            {
+                Retailer r1 = dc1.Retailers.First(std => std.Id == s.retailerId);
+                r1.Balance = r1.Balance - (s.rate * s.quantity);
+                dc1.SubmitChanges();
+            }
+
+            else {
+                r.Balance = r.Balance - (s.rate * s.quantity);
+            }
+
             if (r.Active != 0)
             {
                 Available a = dc.Availables.FirstOrDefault(st => st.Product == "Milk");
                 a.Quantity = a.Quantity - s.quantity;
-
                 s.retailerId = r.Id;
                 s.quantity = float.Parse(quantity);
                 s.rate = float.Parse(rate);
                 s.date = oDate;
                 a.Quantity = a.Quantity + float.Parse(quantity);
+                r.Balance = r.Balance + (float.Parse(quantity) * float.Parse(rate)); 
                 dc.SubmitChanges();
             }
+
             return RedirectToAction("listSupply");
         }
 

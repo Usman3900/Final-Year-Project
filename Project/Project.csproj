@@ -122,6 +122,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
+    <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RetailerController.cs" />
     <Compile Include="Controllers\RiderController.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Bill.cs" />
     <Compile Include="Models\DataClasses1.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -150,6 +152,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.css" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Models\DataClasses1.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
@@ -162,6 +165,7 @@
     <Content Include="Scripts\jquery-3.4.1.slim.js" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -201,10 +205,15 @@
     <Content Include="Views\Customer\listCustomer.cshtml" />
     <Content Include="Views\Rider\listRider.cshtml" />
     <Content Include="Views\Retailer\listRetailer.cshtml" />
-    <Content Include="Views\Shared\listSupply.cshtml" />
+    <Content Include="Views\Supply\listSupply.cshtml" />
+    <Content Include="Views\Rider\expenditureRider.cshtml" />
+    <Content Include="Views\Retailer\paymentRetailer.cshtml" />
+    <Content Include="Views\Customer\CustomerBillings.cshtml" />
+    <Content Include="Views\Delivery\DailyDeliveryList.cshtml" />
+    <Content Include="Views\Delivery\Check.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Views\Supply\" />
+    <Folder Include="Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

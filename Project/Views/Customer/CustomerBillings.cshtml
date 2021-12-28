@@ -1,0 +1,377 @@
+﻿@model IEnumerable<Project.Models.Customer_Payment>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="~/Scripts/images/logo.png" rel="icon" />
+    <title>Online Hospital Management System</title>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href="~/Scripts/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Scripts/css/style.css" rel="stylesheet">
+    <script src="~/Scripts/js/jquery.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            $('#doctorlist').show();
+            $('.doctor li:first-child a').addClass('active');
+            $('.doctor li a').click(function (e) {
+
+                var tabDiv = this.hash;
+                $('.doctor li a').removeClass('active');
+                $(this).addClass('.active');
+                $('.switchgroup').hide();
+                $(tabDiv).fadeIn();
+                e.preventDefault();
+
+            });
+
+
+        });
+
+
+        function changa() {
+            document.getElementById("custid").value = arguments[0];
+            document.getElementById("Id").value = arguments[1];
+            document.getElementById("Payment").value = arguments[2];
+            
+
+        }
+
+        function changeText() {
+            if (document.getElementById("tog").innerHTML === "Customer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+") {
+                document.getElementById("tog").innerHTML = "Customer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-"
+            }
+            else {
+                document.getElementById("tog").innerHTML = "Customer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+"
+            }
+        }
+
+        function changeTextRider() {
+            if (document.getElementById("tog1").innerHTML === "Rider &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+") {
+                document.getElementById("tog1").innerHTML = "Rider &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-"
+            }
+            else {
+                document.getElementById("tog1").innerHTML = "Rider &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+"
+            }
+        }
+
+        function changeTextRetailer() {
+            if (document.getElementById("tog2").innerHTML === "Retailer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+") {
+                document.getElementById("tog2").innerHTML = "Retailer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-"
+            }
+            else {
+                document.getElementById("tog2").innerHTML = "Retailer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+"
+            }
+        }
+
+    </script>
+</head>
+<body>
+
+
+
+    <div class="container-fluid">
+
+        <!--- Header Start -------->
+        <div class="row header">
+
+            <div class="col-md-10">
+                <h2>Hospital Mangement System</h3>
+            </div>
+
+            <div class="col-md-2 ">
+                <ul class="nav nav-pills ">
+                    <li class="dropdown dmenu">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Admin <span class="caret"></span></a>
+                        <ul class="dropdown-menu ">
+                            <li><a href="profile.html">Change Profile</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="index.html">Logout</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!--- Header Ends --------->
+
+        <div class="row">
+
+            <!----- Menu Area Start ------>
+            <div class="col-md-2 menucontent">
+
+                <a href="#"><h1>Dashboard</h1></a>
+
+                <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation"><a href="/Supply/listSupply">Supply Record</a></li>
+                    <li role="presentation"><a href="/Delivery/DailyDeliveryList">Delivery</a></li>
+
+
+                    <li role="presentation">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1" id="tog" onclick="changeText()">Customer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</button>
+
+                        <div class="collapse multi-collapse" id="multiCollapseExample1">
+
+                            <div class="card card-body" style=" margin-left: 5%; ">
+                                <ul class="nav nav-pills nav-stacked">
+
+
+                                    <li role="presentation">
+                                        <a href="/Customer/listCustomer">List & Registration </a>
+                                    </li>
+
+                                    <li role="presentation">
+                                        <a href="/Customer/customerBillings">Payments</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <li role="presentation">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2" id="tog1" onclick="changeTextRider()">Rider &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</button>
+
+                        <div class="collapse multi-collapse" id="multiCollapseExample2">
+
+                            <div class="card card-body" style=" margin-left: 5%; ">
+                                <ul class="nav nav-pills nav-stacked">
+
+
+                                    <li role="presentation">
+                                        <a href="/Rider/listRider">List & Registration </a>
+                                    </li>
+
+                                    <li role="presentation">
+                                        <a href="/Rider/expenditureRider">Expenditures</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <li role="presentation">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample3" aria-expanded="false" aria-controls="multiCollapseExample3" id="tog2" onclick="changeTextRetailer()">Retailer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</button>
+
+                        <div class="collapse multi-collapse" id="multiCollapseExample3">
+
+                            <div class="card card-body" style=" margin-left: 5%; ">
+                                <ul class="nav nav-pills nav-stacked">
+
+
+                                    <li role="presentation">
+                                        <a href="/Retailer/listRetailer">List & Registration </a>
+                                    </li>
+
+                                    <li role="presentation">
+                                        <a href="/Retailer/paymentRetailer">Payments</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+
+                </ul>
+
+            </div>
+            <!---- Menu Ares Ends  -------->
+            <!---- Content Ares Start  -------->
+            <div class="col-md-10 maincontent">
+                <!----------------   Menu Tab   --------------->
+                <div class="panel panel-default contentinside">
+                    <div class="panel-heading">Manage Customer</div>
+                    <!----------------   Panel body Start   --------------->
+                    <div class="panel-body">
+                        <ul class="nav nav-tabs doctor">
+
+                            <li role="presentation"><a href="#doctorlist">Payment List</a></li>
+                            <li role="presentation"><a href="#adddoctor">Add New Payment</a></li>
+                        
+                        </ul>
+
+                        <!----------------   Display Doctor Data List Start  --------------->
+
+
+                        <div id="doctorlist" class="switchgroup">
+
+                            <div class="panel-body">
+                                <form class="form-horizontal" action="/Customer/SearchCustomer" method="post">
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">Customer Id:</label>
+                                        <div class="col-sm-10">
+                                            <input type="number" class="form-control" name="rid" placeholder="Customer Id">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">From</label>
+                                        <div class="col-sm-10">
+                                            <input type="date" class="form-control" name="fromdate" placeholder="Date">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">To</label>
+                                        <div class="col-sm-10">
+                                            <input type="date" class="form-control" name="todate" placeholder="Date">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="col-sm-offset-2 col-sm-10">
+                                            <button type="submit" class="btn btn-primary">Filter</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <table class="table table-bordered table-hover">
+
+                                <tr class="active">
+                                    <td>Customer Id</td>
+                                    <td>Name</td>
+                                    <td>Date</td>
+                                    <td>Payment</td>
+                                    <td>Options</td>
+                                </tr>
+
+                                @foreach (var s in Model)
+                                {
+
+                                    <tr>
+                                        <td>@s.CustomerId</td>
+                                        <td>@s.Name</td>
+                                        <td>@s.Date.Day/@s.Date.Month/@s.Date.Year</td>
+                                        <td>@s.Payment</td>
+                                        <td>
+                                            <a href="#"><button type="button" id="@s.Id" value="@s.Id" onClick="changa(this.value, @s.CustomerId, @s.Payment)" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></button></a>
+                                            <a href="/Customer/deleteCustomerPayment/@s.Id" class="btn btn-danger"><input type="hidden" value="@s.Id" name="deleteValue"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                        </td>
+                                    </tr>
+
+                                }
+
+                            </table>
+                            <a href="/Customer/showAllCustomers" style="float: right;"><input type="button" class="btn btn-primary" value="Show all Data"></button></a>
+
+                        </div>
+                        <!----------------   Display Doctor Data List Ends  --------------->
+                        <!------ Doctor Edit Info Modal Start Here ---------->
+
+
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+
+
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">Edit Customer Information</h4>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <form class="form-horizontal" action="/Customer/ModifyCustomerPayment" method="post">
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Id</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="number" class="form-control" id="custid" name="custid" readonly="readonly">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Customer Id</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="number" class="form-control" id="Id" name="Id" placeholder="Customer Id" required="required">
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Date</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="date" class="form-control" id="date" name="date" placeholder="Date" required="required">
+                                                        </div>
+                                                    </div>
+
+                                                   
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Payment</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="text" class="form-control" id="Payment" name="payment" placeholder="Payment" required="required">
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <input type="submit" class="btn btn-primary" value="Update"></button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!----------------   Modal ends here  --------------->
+                        <!----------------   Add Doctor Start   --------------->
+                        <div id="adddoctor" class="switchgroup">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <form class="form-horizontal" action="/Customer/addCustomerPayment" method="post">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Customer Id</label>
+                                            <div class="col-sm-10">
+                                                <input type="number" class="form-control" name="custid" placeholder="Id" required="required">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Date</label>
+                                            <div class="col-sm-10">
+                                                <input type="date" class="form-control" name="date" placeholder="date" required="required">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Payment</label>
+                                            <div class="col-sm-10">
+                                                <input type="number" class="form-control" name="payment" placeholder="Payment" required="required">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <button type="submit" class="btn btn-primary">Add Payment</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+                       
+                    </div>
+                    <!----------------   Panel body Ends   --------------->
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="~/Scripts/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -44,8 +44,15 @@
 
         }
 
-        function changa(val) {
-            document.getElementById("custid").value = val;
+        function changa() {
+            document.getElementById("custid").value = arguments[0];
+            document.getElementById("Rname").value = arguments[1];
+            document.getElementById("Rphone").value = arguments[2];
+            document.getElementById("Raddress").value = arguments[3];
+            document.getElementById("Rcnic").value = arguments[4];
+            let x = arguments[5].split(" ");
+         
+            document.getElementById("Rdate").value = x[0];
 
         }
 
@@ -84,17 +91,79 @@
                 <a href="#"><h1>Dashboard</h1></a>
 
                 <ul class="nav nav-pills nav-stacked">
-                    <li role="presentation"><a href="department.html">Department</a></li>
                     <li role="presentation"><a href="/Supply/listSupply">Supply Record</a></li>
-                    <li role="presentation"><a href="patients.html">Patients</a></li>
-
-                    <li role="presentation"><a href="profile.html">Profile</a></li>
+                    <li role="presentation"><a href="/Delivery/DailyDeliveryList">Delivery</a></li>
 
 
 
-                    <li role="presentation"><a href="/Customer/listCustomer">Customer</a></li>
-                    <li role="presentation"><a href="/Rider/listRider">Rider</a></li>
-                    <li role="presentation"><a href="/Retailer/listRetailer">Retailer</a></li>
+                    <li role="presentation">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample1" aria-expanded="false" aria-controls="multiCollapseExample1" id="tog" onclick="changeText()">Customer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</button>
+
+                        <div class="collapse multi-collapse" id="multiCollapseExample1">
+
+                            <div class="card card-body" style=" margin-left: 5%; ">
+                                <ul class="nav nav-pills nav-stacked">
+
+
+                                    <li role="presentation">
+                                        <a href="/Customer/listCustomer">List & Registration </a>
+                                    </li>
+
+                                    <li role="presentation">
+                                        <a href="/Customer/customerBillings">Payments</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <li role="presentation">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2" id="tog1" onclick="changeTextRider()">Rider &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</button>
+
+                        <div class="collapse multi-collapse" id="multiCollapseExample2">
+
+                            <div class="card card-body" style=" margin-left: 5%; ">
+                                <ul class="nav nav-pills nav-stacked">
+
+
+                                    <li role="presentation">
+                                        <a href="/Rider/listRider">List & Registration </a>
+                                    </li>
+
+                                    <li role="presentation">
+                                        <a href="/Rider/expenditureRider">Expenditures</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
+
+                    <li role="presentation">
+                        <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#multiCollapseExample3" aria-expanded="false" aria-controls="multiCollapseExample3" id="tog2" onclick="changeTextRetailer()">Retailer &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;+</button>
+
+                        <div class="collapse multi-collapse" id="multiCollapseExample3">
+
+                            <div class="card card-body" style=" margin-left: 5%; ">
+                                <ul class="nav nav-pills nav-stacked">
+
+
+                                    <li role="presentation">
+                                        <a href="/Retailer/listRetailer">List & Registration </a>
+                                    </li>
+
+                                    <li role="presentation">
+                                        <a href="/Retailer/paymentRetailer">Payments</a>
+                                    </li>
+
+                                </ul>
+                            </div>
+                        </div>
+                    </li>
+
 
                 </ul>
             </div>
@@ -110,7 +179,7 @@
                             <li role="presentation"><a href="#doctorlist">Active Rider List</a></li>
                             <li role="presentation"><a href="#adddoctor">Add New Rider</a></li>
                             <li role="presentation"><a href="#addme">Non-Active Riders</a></li>
-                            <li role="presentation"><a href="#addexxpend">Enter Rider Expenditure</a></li>
+                            
 
                         </ul>
 
@@ -141,7 +210,7 @@
                                             <td>@s.CNIC</td>
                                             <td>@s.JoiningDate.Day/@s.JoiningDate.Month/@s.JoiningDate.Year</td>
                                             <td>
-                                                <a href="#"><button type="button" id="@s.Id" value="@s.Id" onClick="changa(this.value)" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></button></a>
+                                                <a href="#"><button type="button" id="@s.Id" value="@s.Id" onClick="changa(this.value, '@s.Name', '@s.Phone_Number', '@s.Address', '@s.CNIC', '@s.JoiningDate')" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></button></a>
                                                 <a href="/Rider/deleteRider/@s.Id" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
                                             </td>
                                         </tr>
@@ -177,14 +246,14 @@
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Name</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" name="Rname" placeholder="Name" required="required">
+                                                            <input type="text" class="form-control" name="Rname" id="Rname" placeholder="Name" required="required">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Phone No.</label>
                                                         <div class="col-sm-10">
-                                                            <input type="number" class="form-control" name="Rphone" placeholder="Phone Number" required="required">
+                                                            <input type="number" class="form-control" name="Rphone" id="Rphone" placeholder="Phone Number" required="required">
                                                         </div>
                                                     </div>
 
@@ -192,21 +261,21 @@
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Address</label>
                                                         <div class="col-sm-10">
-                                                            <input type="text" class="form-control" name="Raddress" placeholder="Address" required="required">
+                                                            <input type="text" class="form-control" name="Raddress" id="Raddress" placeholder="Address" required="required">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">CNIC</label>
                                                         <div class="col-sm-10">
-                                                            <input type="number" class="form-control" name="Rcnic" placeholder="CNIC" required="required">
+                                                            <input type="number" class="form-control" name="Rcnic" id="Rcnic" placeholder="CNIC" required="required">
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Joining Date</label>
                                                         <div class="col-sm-10">
-                                                            <input type="date" class="form-control" name="Rdate" placeholder="Joining Date" required="required">
+                                                            <input type="date" class="form-control" name="Rdate" id="Rdate" placeholder="Joining Date" required="required">
                                                         </div>
                                                     </div>
 
@@ -346,6 +415,67 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div id="listexpend" class="switchgroup" style="display:none;">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <form class="form-horizontal" action="#" method="post">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Rider Id:</label>
+                                            <div class="col-sm-10">
+                                                <input type="number" class="form-control" name="rid" placeholder="Rider ID" required="required">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">From</label>
+                                            <div class="col-sm-10">
+                                                <input type="date" class="form-control" name="fromdate" placeholder="Date" required="required">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">To</label>
+                                            <div class="col-sm-10">
+                                                <input type="date" class="form-control" name="todate" placeholder="Date" required="required">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <button type="submit" class="btn btn-primary">Search</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <table class="table table-bordered table-hover">
+                                    <tr class="active">
+                                        <td>Doctor ID</td>
+                                        <td>Doctor Name</td>
+                                        <td>Department</td>
+                                        <td>Phone No.</td>
+                                        <td>Options</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>111</td>
+                                        <td>Dharmesh</td>
+                                        <td>Neurology</td>
+                                        <td>123456789</td>
+                                        <td>
+                                            <a><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></button></a>
+                                            <a href="#" class="btn btn-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+
+
+
+
+
                         <!----------------   Add Doctor Ends   --------------->
                     </div>
                     <!----------------   Panel body Ends   --------------->
