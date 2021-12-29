@@ -359,7 +359,6 @@ namespace Project.Controllers
                                  where b.CustomerId == cid && b.Date >= fdate && b.Date <= tdate
                                  select new Bill
                                  {
-
                                      customerId = b.CustomerId,
                                      riderId = b.RiderId,
                                      customerName = c.Name,
@@ -510,6 +509,10 @@ namespace Project.Controllers
             }
             catch(Exception e)
             { }
+
+            Available a = dc.Availables.FirstOrDefault(st => st.Product == "Milk");
+            a.Quantity -= float.Parse(quantity);
+
             dc.Billings.InsertOnSubmit(b);
             dc.SubmitChanges();
 
@@ -527,6 +530,9 @@ namespace Project.Controllers
 
             Billing b = dc.Billings.First(std => std.Id == float.Parse(id));
             Customer c1 = dc.Customers.First(std => std.Id == float.Parse(cid));
+
+            Available a = dc.Availables.FirstOrDefault(st => st.Product == "Milk");
+            a.Quantity += b.Quantity;
 
             if (b.CustomerId != float.Parse(cid))
             {
@@ -547,6 +553,7 @@ namespace Project.Controllers
             b.Quantity = float.Parse(quantity);
             b.Rate = (double)c1.Rate;
             b.Date = Convert.ToDateTime(date);
+            a.Quantity -= float.Parse(quantity);
 
             dc.SubmitChanges();
             return RedirectToAction("DailyDeliveryList");
@@ -559,6 +566,10 @@ namespace Project.Controllers
             Customer c1 = dc.Customers.First(std => std.Id == b.CustomerId);
 
             c1.Balance -= (b.Rate * b.Quantity);
+
+            Available a = dc.Availables.FirstOrDefault(st => st.Product == "Milk");
+            a.Quantity += b.Quantity;
+
             dc.Billings.DeleteOnSubmit(b);
 
             dc.SubmitChanges();

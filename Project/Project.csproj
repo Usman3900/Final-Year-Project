@@ -124,6 +124,7 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\RegularSaleController.cs" />
     <Compile Include="Controllers\RetailerController.cs" />
     <Compile Include="Controllers\RiderController.cs" />
     <Compile Include="Controllers\SupplyController.cs" />
@@ -211,6 +212,7 @@
     <Content Include="Views\Customer\CustomerBillings.cshtml" />
     <Content Include="Views\Delivery\DailyDeliveryList.cshtml" />
     <Content Include="Views\Delivery\Check.cshtml" />
+    <Content Include="Views\RegularSale\RegularSaleList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Shared\" />
