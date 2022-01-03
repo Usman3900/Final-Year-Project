@@ -121,12 +121,15 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CustomerPaymentsController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DeliveryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\RegularSaleController.cs" />
     <Compile Include="Controllers\RetailerController.cs" />
+    <Compile Include="Controllers\RetailerPaymentController.cs" />
     <Compile Include="Controllers\RiderController.cs" />
+    <Compile Include="Controllers\RiderExpendituresController.cs" />
     <Compile Include="Controllers\SupplyController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -160,6 +163,7 @@
       <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
+    <None Include="Properties\PublishProfiles\IISProfile.pubxml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -207,16 +211,13 @@
     <Content Include="Views\Rider\listRider.cshtml" />
     <Content Include="Views\Retailer\listRetailer.cshtml" />
     <Content Include="Views\Supply\listSupply.cshtml" />
-    <Content Include="Views\Rider\expenditureRider.cshtml" />
-    <Content Include="Views\Retailer\paymentRetailer.cshtml" />
-    <Content Include="Views\Customer\CustomerBillings.cshtml" />
+    <Content Include="Views\RiderExpenditures\expenditureRider.cshtml" />
+    <Content Include="Views\RetailerPayment\paymentRetailer.cshtml" />
+    <Content Include="Views\CustomerPayments\CustomerBillings.cshtml" />
     <Content Include="Views\Delivery\DailyDeliveryList.cshtml" />
-    <Content Include="Views\Delivery\Check.cshtml" />
     <Content Include="Views\RegularSale\RegularSaleList.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Views\Shared\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

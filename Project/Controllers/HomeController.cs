@@ -15,10 +15,7 @@ namespace Project.Controllers
         {
             return RedirectToAction("listCustomer", "Customer");
         }
-       
 
     }
-
-     
-        
-    }
+   
+}

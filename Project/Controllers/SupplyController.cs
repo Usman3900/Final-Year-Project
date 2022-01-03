@@ -15,6 +15,7 @@ namespace Project.Controllers
         // GET: Supply
         public ActionResult Index()
         {
+            Session["SupplyError"] = null;
             return RedirectToAction("listSupply");
         }
 
@@ -87,26 +88,48 @@ namespace Project.Controllers
             string date = Request["date"];
             DateTime oDate = Convert.ToDateTime(date);
 
-            Retailer r = dc.Retailers.First(std => std.Id == float.Parse(id));
-            if (r.Active != 0)
+            try
             {
-                Supply s = new Supply();
-                s.retailerId = (int)float.Parse(id);
-                s.quantity = float.Parse(quantity);
-                s.date = oDate;
-                s.rate = float.Parse(rate);
-                s.name = r.Name;
+                Retailer r = dc.Retailers.First(std => std.Id == float.Parse(id));
 
-                r.Balance = r.Balance + (float.Parse(rate) * float.Parse(quantity));
+                if (r.Active != 0)
+                {
+                    Supply s = new Supply();
+                    s.retailerId = (int)float.Parse(id);
+                    s.quantity = float.Parse(quantity);
+                    s.date = oDate;
+                    s.rate = float.Parse(rate);
+                    s.name = r.Name;
 
-                Available a = dc.Availables.FirstOrDefault(st => st.Product == "Milk");
-                a.Quantity = a.Quantity + float.Parse(quantity);
+                    r.Balance = r.Balance + (float.Parse(rate) * float.Parse(quantity));
 
-                dc.Supplies.InsertOnSubmit(s);
-                dc.SubmitChanges();
+                    Available a = dc.Availables.FirstOrDefault(st => st.Product == "Milk");
+                    a.Quantity = a.Quantity + float.Parse(quantity);
+
+                    dc.Supplies.InsertOnSubmit(s);
+                    dc.SubmitChanges();
+                }
+
+                else
+                {
+                    Session["SupplyError"] = 1;
+                    Session["SupplyErrorMessage0"] = "Supply cannot be added!";
+                    Session["SupplyErrorMessage1"] = "Retailer status is inactive!";
+                    return RedirectToAction("listSupply");
+                }
+
+                Session["key"] = 1;
             }
-            Session["key"] = 1;
-            return RedirectToAction("listSupply");
+
+            catch (Exception ex)
+            {
+                Session["SupplyError"] = 1;
+                Session["SupplyErrorMessage0"] = "Supply cannot be added!";
+                Session["SupplyErrorMessage1"] = "Retailer not found!";
+                return RedirectToAction("listSupply");
+            }
+
+            return RedirectToAction("Index");
         }
 
         public ActionResult deleteSupply(String id)
@@ -120,7 +143,7 @@ namespace Project.Controllers
             ////////////////////////////////// Deleteing Data But Confirmation message is needed ///////////////////////////////////////
             dc.Supplies.DeleteOnSubmit(c);
             dc.SubmitChanges();
-            return RedirectToAction("listSupply");
+            return RedirectToAction("Index");
         }
 
         public ActionResult modifySupply()
@@ -134,40 +157,59 @@ namespace Project.Controllers
 
             Supply s = dc.Supplies.First(std => std.Id == float.Parse(id));
 
-            Retailer r = dc.Retailers.First(std => std.Id == float.Parse(retailerId));
-
-            if (s.retailerId != float.Parse(retailerId))
+            try
             {
-                Retailer r1 = dc1.Retailers.First(std => std.Id == s.retailerId);
-                r1.Balance = r1.Balance - (s.rate * s.quantity);
-                dc1.SubmitChanges();
+                Retailer r = dc.Retailers.First(std => std.Id == float.Parse(retailerId));
+                if (r.Active == 0)
+                {
+                    Session["SupplyError"] = 1;
+                    Session["SupplyErrorMessage0"] = "Supply cannot be added!";
+                    Session["SupplyErrorMessage1"] = "New Entered Retailer status is inactive!";
+                    return RedirectToAction("listSupply");
+                }
+
+                if (s.retailerId != float.Parse(retailerId))
+                {
+                    Retailer r1 = dc1.Retailers.First(std => std.Id == s.retailerId);
+                    r1.Balance = r1.Balance - (s.rate * s.quantity);
+                    dc1.SubmitChanges();
+                }
+
+                else
+                {
+                    r.Balance = r.Balance - (s.rate * s.quantity);
+                }
+
+                if (r.Active != 0)
+                {
+                    Available a = dc.Availables.FirstOrDefault(st => st.Product == "Milk");
+                    a.Quantity = a.Quantity - s.quantity;
+                    s.retailerId = r.Id;
+                    s.quantity = float.Parse(quantity);
+                    s.rate = float.Parse(rate);
+                    s.date = oDate;
+                    a.Quantity = a.Quantity + float.Parse(quantity);
+                    r.Balance = r.Balance + (float.Parse(quantity) * float.Parse(rate));
+                    dc.SubmitChanges();
+                }
             }
 
-            else {
-                r.Balance = r.Balance - (s.rate * s.quantity);
-            }
-
-            if (r.Active != 0)
+            catch (Exception ex)
             {
-                Available a = dc.Availables.FirstOrDefault(st => st.Product == "Milk");
-                a.Quantity = a.Quantity - s.quantity;
-                s.retailerId = r.Id;
-                s.quantity = float.Parse(quantity);
-                s.rate = float.Parse(rate);
-                s.date = oDate;
-                a.Quantity = a.Quantity + float.Parse(quantity);
-                r.Balance = r.Balance + (float.Parse(quantity) * float.Parse(rate)); 
-                dc.SubmitChanges();
+                Session["SupplyError"] = 1;
+                Session["SupplyErrorMessage0"] = "Supply cannot be added!";
+                Session["SupplyErrorMessage1"] = "New Entered Retailer not found!";
+                return RedirectToAction("listSupply");
             }
 
-            return RedirectToAction("listSupply");
+            return RedirectToAction("Index");
         }
 
 
         public ActionResult showall()
         {
             Session["Key"] = 1;
-            return RedirectToAction("listSupply");
+            return RedirectToAction("Index");
         }
 
         public ActionResult searchSupplyRecord()
@@ -223,7 +265,7 @@ namespace Project.Controllers
                 Session["toDate"] = toDate;
                 Session["key"] = 8;
             }
-            return RedirectToAction("listSupply");
+            return RedirectToAction("Index");
 
         }
 

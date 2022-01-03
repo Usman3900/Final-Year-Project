@@ -15,7 +15,8 @@ namespace Project.Controllers
         // GET: Delivery
         public ActionResult Index()
         {
-            return View();
+            Session["DeliveryError"] = null;
+            return RedirectToAction("DailyDeliveryList");
         } 
         
         public ActionResult DailyDeliveryList()
@@ -486,9 +487,48 @@ namespace Project.Controllers
             string date = Request["date"];
             string quantity = Request["quantity"];
             DateTime oDate = Convert.ToDateTime(date);
+            Customer c;
+            Rider r;
 
-            Customer c = dc.Customers.First(std => std.Id == float.Parse(Cid));
-            Rider r = dc.Riders.First(std => std.Id == float.Parse(Rid));
+            try
+            {
+                c = dc.Customers.First(std => std.Id == float.Parse(Cid));
+
+                if(c.Active == 0)
+                {
+                    Session["DeliveryError"] = 1;
+                    Session["DeliveryErrorMessage0"] = "Delivery cannot be added!";
+                    Session["DeliveryErrorMessage1"] = "Customer status is inactive!";
+                    return RedirectToAction("DailyDeliveryList");
+                }
+            }
+            catch(Exception ex)
+            {
+                Session["DeliveryError"] = 1;
+                Session["DeliveryErrorMessage0"] = "Delivery cannot be added!";
+                Session["DeliveryErrorMessage1"] = "Customer not found!";
+                return RedirectToAction("DailyDeliveryList");
+            }
+
+            try
+            {
+                r = dc.Riders.First(std => std.Id == float.Parse(Rid));
+
+                if (r.Active == 0)
+                {
+                    Session["DeliveryError"] = 1;
+                    Session["DeliveryErrorMessage0"] = "Delivery cannot be added!";
+                    Session["DeliveryErrorMessage1"] = "Rider status is inactive!";
+                    return RedirectToAction("DailyDeliveryList");
+                }
+            }
+            catch (Exception ex)
+            {
+                Session["DeliveryError"] = 1;
+                Session["DeliveryErrorMessage0"] = "Delivery cannot be added!";
+                Session["DeliveryErrorMessage1"] = "Rider not found!";
+                return RedirectToAction("DailyDeliveryList");
+            }
 
             Billing b = new Billing();
 
@@ -516,7 +556,7 @@ namespace Project.Controllers
             dc.Billings.InsertOnSubmit(b);
             dc.SubmitChanges();
 
-            return RedirectToAction("DailyDeliveryList");
+            return RedirectToAction("Index");
 
         }
 
@@ -556,7 +596,7 @@ namespace Project.Controllers
             a.Quantity -= float.Parse(quantity);
 
             dc.SubmitChanges();
-            return RedirectToAction("DailyDeliveryList");
+            return RedirectToAction("Index");
 
         }
 
@@ -573,7 +613,7 @@ namespace Project.Controllers
             dc.Billings.DeleteOnSubmit(b);
 
             dc.SubmitChanges();
-            return RedirectToAction("DailyDeliveryList");
+            return RedirectToAction("Index");
         }
 
         public ActionResult filterSearch()
@@ -682,13 +722,13 @@ namespace Project.Controllers
                 Session["tdate"] = tdate;
             }
 
-            return RedirectToAction("DailyDeliveryList");
+            return RedirectToAction("Index");
         }
 
         public ActionResult showAllDeliveries()
         {
             Session["deliveryKey"] = null;
-            return RedirectToAction("DailyDeliveryList");
+            return RedirectToAction("Index");
         }
         
 

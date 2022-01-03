@@ -110,8 +110,8 @@
                 <a href="#"><h1>Dashboard</h1></a>
 
                 <ul class="nav nav-pills nav-stacked">
-                    <li role="presentation"><a href="/Supply/listSupply">Supply Record</a></li>
-                    <li role="presentation"><a href="/Delivery/DailyDeliveryList">Delivery</a></li>
+                    <li role="presentation"><a href="/Supply/Index">Supply Record</a></li>
+                    <li role="presentation"><a href="/Delivery/Index">Delivery</a></li>
                     <li role="presentation"><a href="/RegularSale/RegularSaleList">Regular Sale</a></li>
 
 
@@ -129,7 +129,7 @@
                                     </li>
 
                                     <li role="presentation">
-                                        <a href="/Customer/customerBillings">Payments</a>
+                                        <a href="/CustomerPayments/Index">Payments</a>
                                     </li>
 
                                 </ul>
@@ -152,7 +152,7 @@
                                     </li>
 
                                     <li role="presentation">
-                                        <a href="/Rider/expenditureRider">Expenditures</a>
+                                        <a href="/RiderExpenditures/Index">Expenditures</a>
                                     </li>
 
                                 </ul>
@@ -175,7 +175,7 @@
                                     </li>
 
                                     <li role="presentation">
-                                        <a href="/Retailer/paymentRetailer">Payments</a>
+                                        <a href="/RetailerPayment/Index">Payments</a>
                                     </li>
 
                                 </ul>
@@ -207,7 +207,7 @@
 
 
                         <div id="doctorlist" class="switchgroup">
-                                
+
                             <table class="table table-bordered table-hover">
 
                                 <tr class="active">
@@ -241,7 +241,7 @@
                                 }
 
                             </table>
-                            <a href="/Customer/showAllCustomers" style="float: right;"><input type="button" class="btn btn-primary" value="Show all Data"></button></a>
+                            <a href="/RegularSale/showAllRegularSale" style="float: right;"><input type="button" class="btn btn-primary" value="Show all Data"></button></a>
 
                         </div>
 
@@ -293,7 +293,7 @@
                                                             <input type="text" class="form-control" id="rate" name="rate" placeholder="Rate" required="required">
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div class="form-group">
                                                         <label class="col-sm-2 control-label">Quantity</label>
                                                         <div class="col-sm-10">
@@ -324,7 +324,7 @@
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Customer Name</label>
                                             <div class="col-sm-10">
-                                                <input type="text" class="form-control" name="custname" placeholder="Customer Name" required="required" >
+                                                <input type="text" class="form-control" name="custname" placeholder="Customer Name" required="required">
                                             </div>
                                         </div>
 
@@ -343,7 +343,7 @@
                                                 <input type="number" class="form-control" name="rate" placeholder="Rate" required="required">
                                             </div>
                                         </div>
-                                        
+
 
                                         <div class="form-group">
                                             <label class="col-sm-2 control-label">Quantity</label>
@@ -356,6 +356,43 @@
                                         <div class="form-group">
                                             <div class="col-sm-offset-2 col-sm-10">
                                                 <button type="submit" class="btn btn-primary">Add Sale</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="addme" class="switchgroup" style="display:none">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <form class="form-horizontal" action="/RegularSale/filterSaleSearch" method="post">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Customer Name</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="name" placeholder="Customer Name">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">From</label>
+                                            <div class="col-sm-10">
+                                                <input type="date" class="form-control" name="fdate" placeholder="From">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">To</label>
+                                            <div class="col-sm-10">
+                                                <input type="date" class="form-control" name="tdate" placeholder="Date">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <button type="submit" class="btn btn-primary">Filter</button>
                                             </div>
                                         </div>
                                     </form>

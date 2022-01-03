@@ -65,11 +65,35 @@
             document.getElementById("cid").value = arguments[1];
             document.getElementById("rid").value = arguments[2];
             document.getElementById("quantity").value = arguments[3];
-            
+
 
         }
 
     </script>
+
+    <style>
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
+        }
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+            .closebtn:hover {
+                color: black;
+            }
+    </style>
+
 </head>
 <body>
     <div class="container-fluid">
@@ -104,8 +128,8 @@
                 <a href="#"><h1>Dashboard</h1></a>
 
                 <ul class="nav nav-pills nav-stacked">
-                    <li role="presentation"><a href="/Supply/listSupply">Supply Record</a></li>
-                    <li role="presentation"><a href="/Delivery/DailyDeliveryList">Delivery</a></li>
+                    <li role="presentation"><a href="/Supply/Index">Supply Record</a></li>
+                    <li role="presentation"><a href="/Delivery/Index">Delivery</a></li>
                     <li role="presentation"><a href="/RegularSale/RegularSaleList">Regular Sale</a></li>
 
 
@@ -125,7 +149,7 @@
                                     </li>
 
                                     <li role="presentation">
-                                        <a href="/Customer/customerBillings">Payments</a>
+                                        <a href="/CustomerPayments/Index">Payments</a>
                                     </li>
 
                                 </ul>
@@ -148,7 +172,7 @@
                                     </li>
 
                                     <li role="presentation">
-                                        <a href="/Rider/expenditureRider">Expenditures</a>
+                                        <a href="/RiderExpenditures/Index">Expenditures</a>
                                     </li>
 
                                 </ul>
@@ -171,7 +195,7 @@
                                     </li>
 
                                     <li role="presentation">
-                                        <a href="/Retailer/paymentRetailer">Payments</a>
+                                        <a href="/RetailerPayment/Index">Payments</a>
                                     </li>
 
                                 </ul>
@@ -187,13 +211,29 @@
             <div class="col-md-10 maincontent">
                 <!----------------   Menu Tab   --------------->
                 <div class="panel panel-default contentinside">
-                    <div class="panel-heading">Manage Rider</div>
+                    <div class="panel-heading">Manage Deliveries</div>
+
+                    @if (Session["DeliveryError"] != null)
+                    {
+
+                        <div class="alert">
+                            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                            <strong>
+                                @Session["DeliveryErrorMessage0"].ToString()
+                                <br />
+                                @Session["DeliveryErrorMessage1"].ToString()
+                            </strong>
+                        </div>
+
+                    }
+
                     <!----------------   Panel body Start   --------------->
                     <div class="panel-body">
                         <ul class="nav nav-tabs doctor">
                             <li role="presentation"><a href="#doctorlist">Delivery List</a></li>
-                            <li role="presentation"><a href="#adddoctor">Add New Delivery</a></li>
                             <li role="presentation"><a href="#addme">Filter Delivery List</a></li>
+                            <li role="presentation"><a href="#adddoctor">Add New Delivery</a></li>
+
 
                         </ul>
 
@@ -398,7 +438,7 @@
 
                         <!----------------   Panel body Ends   --------------->
                     </div>
-            </div>
+                </div>
         </div>
     </div>
     <script src="~/Scripts/js/bootstrap.min.js"></script>

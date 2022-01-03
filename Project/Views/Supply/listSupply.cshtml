@@ -83,9 +83,26 @@
 
 
     <style>
-        .hide {
-            display: none;
+        .alert {
+            padding: 20px;
+            background-color: #f44336;
+            color: white;
         }
+
+        .closebtn {
+            margin-left: 15px;
+            color: white;
+            font-weight: bold;
+            float: right;
+            font-size: 22px;
+            line-height: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+            .closebtn:hover {
+                color: black;
+            }
     </style>
 
 </head>
@@ -125,8 +142,8 @@
                 <a href="#"><h1>Dashboard</h1></a>
 
                 <ul class="nav nav-pills nav-stacked">
-                    <li role="presentation"><a href="/Supply/listSupply">Supply Record</a></li>
-                    <li role="presentation"><a href="/Delivery/DailyDeliveryList">Delivery</a></li>
+                    <li role="presentation"><a href="/Supply/Index">Supply Record</a></li>
+                    <li role="presentation"><a href="/Delivery/Index">Delivery</a></li>
                     <li role="presentation"><a href="/RegularSale/RegularSaleList">Regular Sale</a></li>
 
 
@@ -146,7 +163,7 @@
                                     </li>
 
                                     <li role="presentation">
-                                        <a href="/Customer/customerBillings">Payments</a>
+                                        <a href="/CustomerPayments/Index">Payments</a>
                                     </li>
 
                                 </ul>
@@ -169,7 +186,7 @@
                                     </li>
 
                                     <li role="presentation">
-                                        <a href="/Rider/expenditureRider">Expenditures</a>
+                                        <a href="/RiderExpenditures/Index">Expenditures</a>
                                     </li>
 
                                 </ul>
@@ -192,7 +209,7 @@
                                     </li>
 
                                     <li role="presentation">
-                                        <a href="/Retailer/paymentRetailer">Payments</a>
+                                        <a href="/RetailerPayment/Index">Payments</a>
                                     </li>
 
                                 </ul>
@@ -210,10 +227,26 @@
                 <!----------------   Menu Tab   --------------->
                 <div class="panel panel-default contentinside">
                     <div class="panel-heading">Manage Supply</div>
+
+                    @if (Session["SupplyError"] != null)
+                    {
+
+                        <div class="alert">
+                            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+                            <strong>
+                                @Session["SupplyErrorMessage0"].ToString()
+                                <br />
+                                @Session["SupplyErrorMessage1"].ToString()
+                            </strong>
+                        </div>
+
+                    }
+
                     <!----------------   Panel body Start   --------------->
                     <div class="panel-body">
                         <ul class="nav nav-tabs doctor">
                             <li role="presentation"><a href="#doctorlist">Supply List</a></li>
+                            <li role="presentation"><a href="#addme">Filter Supply List</a></li>
                             <li role="presentation"><a href="#adddoctor">Add New Supply</a></li>
 
                         </ul>
@@ -223,6 +256,157 @@
 
                         <div id="doctorlist" class="switchgroup">
 
+                            <div class="panel panel-default">
+
+                                <table class="table table-bordered table-hover">
+                                    <tr class="active">
+                                        <td>Retailer Id</td>
+                                        <td>Retailer Name</td>
+                                        <td>Supply Date</td>
+                                        <td>Quantity</td>
+                                        <td>Rate</td>
+                                        <td>Total Bill</td>
+                                        <td>Options</td>
+                                    </tr>
+
+                                    @foreach (var s in Model)
+                                    {
+                                        <tr>
+                                            <td>@s.retailerId</td>
+                                            <td>@s.name</td>
+                                            <td>@s.date.Day/@s.date.Month/@s.date.Year</td>
+                                            <td>@s.quantity</td>
+                                            <td>@s.rate</td>
+                                            <td>@(s.quantity*s.rate)</td>
+                                            <td>
+                                                <a href="#"><button type="button" id="@s.Id" value="@s.Id" onClick="changa(this.value, '@s.retailerId', '@s.quantity', '@s.rate', '@s.date')" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></button></a>
+                                                <a href="/Supply/deleteSupply/@s.Id" class="btn btn-danger"><input type="hidden" value="@s.Id" name="deleteValue"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
+                                            </td>
+                                        </tr>
+                                    }
+
+
+                                </table>
+                            </div>
+                            <a href="/Supply/showAll" style="float: right;"><input type="button" class="btn btn-primary" value="Show all Data"></button></a>
+                        </div>
+                        <!----------------   Display Doctor Data List Ends  --------------->
+                        <!------ Doctor Edit Info Modal Start Here ---------->
+
+
+                        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+
+
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title" id="myModalLabel">Edit Supply Information</h4>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <div class="panel panel-default">
+                                            <div class="panel-body">
+                                                <form class="form-horizontal" action="/Supply/modifySupply" method="post">
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Supply Id</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="number" class="form-control" id="custid" name="custid" readonly="readonly">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Retailer Id</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="number" class="form-control" id="rid" name="rid" placeholder="Retailer Id" required="required">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Quantity</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" required="required">
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Rate</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="number" class="form-control" id="rate" name="rate" placeholder="Rate" required="required">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="col-sm-2 control-label">Supply Date</label>
+                                                        <div class="col-sm-10">
+                                                            <input type="date" class="form-control" id="date" name="date" placeholder="date" required="required">
+                                                        </div>
+                                                    </div>
+
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                        <input type="submit" class="btn btn-primary" value="Update"></button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!----------------   Modal ends here  --------------->
+                        <!----------------   Add Doctor Start   --------------->
+                        <div id="adddoctor" class="switchgroup">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <form class="form-horizontal" action="/Supply/addSupply" method="post">
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Retailer Id</label>
+                                            <div class="col-sm-10">
+                                                <input type="number" class="form-control" name="sid" placeholder="Retailer Id" required="required">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Quantity</label>
+                                            <div class="col-sm-10">
+                                                <input type="number" class="form-control" name="quantity" placeholder="Quantity" required="required">
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Rate</label>
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" name="rate" placeholder="Rate" required="required">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <label class="col-sm-2 control-label">Date</label>
+                                            <div class="col-sm-10">
+                                                <input type="date" class="form-control" name="date" placeholder="date" required="required">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-group">
+                                            <div class="col-sm-offset-2 col-sm-10">
+                                                <button type="submit" class="btn btn-primary">Add Supply</button>
+                                            </div>
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="addme" class="switchgroup" style="display: none;">
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <form class="form-horizontal" action="/Supply/searchSupplyRecord" method="post">
@@ -257,155 +441,14 @@
                                     </form>
                                 </div>
 
-                                <table class="table table-bordered table-hover">
-                                    <tr class="active">
-                                        <td>Retailer Id</td>
-                                        <td>Retailer Name</td>
-                                        <td>Supply Date</td>
-                                        <td>Quantity</td>
-                                        <td>Rate</td>
-                                        <td>Total Bill</td>
-                                        <td>Options</td>
-                                    </tr>
-
-                                    @foreach (var s in Model)
-                                    {
-                                        <tr>
-                                            <td>@s.retailerId</td>
-                                            <td>@s.name</td>
-                                            <td>@s.date.Day/@s.date.Month/@s.date.Year</td>
-                                            <td>@s.quantity</td>
-                                            <td>@s.rate</td>
-                                            <td>@(s.quantity*s.rate)</td>
-                                            <td>
-                                                <a href="#"><button type="button" id="@s.Id" value="@s.Id" onClick="changa(this.value, '@s.retailerId', '@s.quantity', '@s.rate', '@s.date')" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><span class="glyphicon glyphicon-wrench" aria-hidden="true"></span></button></a>
-                                                <a href="/Supply/deleteSupply/@s.Id" class="btn btn-danger"><input type="hidden" value="@s.Id" name="deleteValue"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a>
-                                            </td>
-                                        </tr>
-                                    }
-
-
-                                </table>
                             </div>
-                            <a href="/Supply/showAll" style="float: right;"><input type="button" class="btn btn-primary" value="Show all Data"></button></a>
-                            </div>
-                            <!----------------   Display Doctor Data List Ends  --------------->
-                            <!------ Doctor Edit Info Modal Start Here ---------->
-
-
-                            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-
-
-                                        <div class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                            <h4 class="modal-title" id="myModalLabel">Edit Supply Information</h4>
-                                        </div>
-
-                                        <div class="modal-body">
-                                            <div class="panel panel-default">
-                                                <div class="panel-body">
-                                                    <form class="form-horizontal" action="/Supply/modifySupply" method="post">
-
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Supply Id</label>
-                                                            <div class="col-sm-10">
-                                                                <input type="number" class="form-control" id="custid" name="custid" readonly="readonly">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Retailer Id</label>
-                                                            <div class="col-sm-10">
-                                                                <input type="number" class="form-control" id="rid" name="rid" placeholder="Retailer Id" required="required">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Quantity</label>
-                                                            <div class="col-sm-10">
-                                                                <input type="number" class="form-control" id="quantity" name="quantity" placeholder="Quantity" required="required">
-                                                            </div>
-                                                        </div>
-
-
-
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Rate</label>
-                                                            <div class="col-sm-10">
-                                                                <input type="number" class="form-control" id="rate" name="rate" placeholder="Rate" required="required">
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="form-group">
-                                                            <label class="col-sm-2 control-label">Supply Date</label>
-                                                            <div class="col-sm-10">
-                                                                <input type="date" class="form-control" id="date" name="date" placeholder="date" required="required">
-                                                            </div>
-                                                        </div>
-
-
-                                                        <div class="modal-footer">
-                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                            <input type="submit" class="btn btn-primary" value="Update"></button>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!----------------   Modal ends here  --------------->
-                            <!----------------   Add Doctor Start   --------------->
-                            <div id="adddoctor" class="switchgroup">
-                                <div class="panel panel-default">
-                                    <div class="panel-body">
-                                        <form class="form-horizontal" action="/Supply/addSupply" method="post">
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label">Retailer Id</label>
-                                                <div class="col-sm-10">
-                                                    <input type="number" class="form-control" name="sid" placeholder="Retailer Id" required="required">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label">Quantity</label>
-                                                <div class="col-sm-10">
-                                                    <input type="number" class="form-control" name="quantity" placeholder="Quantity" required="required">
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label">Rate</label>
-                                                <div class="col-sm-10">
-                                                    <input type="text" class="form-control" name="rate" placeholder="Rate" required="required">
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group">
-                                                <label class="col-sm-2 control-label">Date</label>
-                                                <div class="col-sm-10">
-                                                    <input type="date" class="form-control" name="date" placeholder="date" required="required">
-                                                </div>
-                                            </div>
-
-
-                                            <div class="form-group">
-                                                <div class="col-sm-offset-2 col-sm-10">
-                                                    <button type="submit" class="btn btn-primary">Add Supply</button>
-                                                </div>
-                                            </div>
-                                        </form>
-
-                                    </div>
-                                </div>
-                            </div>
-
-
                         </div>
+
+
+
+
+
+                    </div>
                     <!----------------   Panel body Ends   --------------->
                 </div>
             </div>
